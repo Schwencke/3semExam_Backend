@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>Schwencke</groupId>
-    <artifactId>backend_loginserver</artifactId>
+    <artifactId>exam</artifactId>
     <version>1.0.1</version>
     <packaging>war</packaging>
 
-    <name>LoginServer</name>
+    <name>exam</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
