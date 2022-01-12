@@ -136,7 +136,7 @@ class RegisterEndpointTest {
 
     @Test
     public void register() throws AuthenticationException {
-        String username = "testerson";
+        String username = "testerdaughter";
         String password = "123";
 
         String json = String.format("{username: \"%s\", password: \"%s\"}", username, password);
@@ -147,7 +147,7 @@ class RegisterEndpointTest {
                 .when().post("/register/reg").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("username", equalTo("testerson"));
+                .body("username", equalTo("testerdaughter"));
 
     }
 }

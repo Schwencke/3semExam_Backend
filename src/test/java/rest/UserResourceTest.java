@@ -50,19 +50,27 @@ class UserResourceTest {
 
         em.getTransaction().begin();
 
-        Role userRole = new Role("user");
-        Role adminRole = new Role("admin");
-        User user = new User("user", "test");
-        user.addRole(userRole);
-        User admin = new User("admin", "test");
-        admin.addRole(adminRole);
-
-        em.persist(userRole);
-        em.persist(adminRole);
-        em.persist(user);
-        em.persist(admin);
+        em.createQuery("delete from User").executeUpdate();
+        em.createQuery("delete from Role").executeUpdate();
 
         em.getTransaction().commit();
+        try {
+            em.getTransaction().begin();
+
+            Role userRole = new Role("user");
+            Role adminRole = new Role("admin");
+            User user = new User("user", "test");
+            user.addRole(userRole);
+            User admin = new User("admin", "test");
+            admin.addRole(adminRole);
+
+            em.merge(user);
+            em.merge(admin);
+
+            em.getTransaction().commit();
+        }finally {
+            em.close();
+        }
     }
 
     @AfterEach

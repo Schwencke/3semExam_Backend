@@ -37,6 +37,21 @@ class LoginEndpointTest {
         return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, rc);
     }
 
+    @AfterEach
+    public void clean(){
+        EntityManager em = emf.createEntityManager();
+        try{
+            em.getTransaction().begin();
+            em.createQuery("delete from User").executeUpdate();
+            em.createQuery("delete from Role").executeUpdate();
+            em.getTransaction().commit();
+        }finally {
+            em.close();
+        }
+
+    }
+
+
     @BeforeAll
     static void setUpClass() {
         EMF_Creator.startREST_TestWithDB();
