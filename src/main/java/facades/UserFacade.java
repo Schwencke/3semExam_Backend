@@ -9,6 +9,9 @@ import javax.persistence.TypedQuery;
 import errorhandling.GenericExceptionMapper;
 import security.errorhandling.AuthenticationException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class UserFacade {
 
@@ -69,5 +72,36 @@ public class UserFacade {
         }finally {
             em.close();
         }
+    }
+
+    public List<User> initDB() throws Exception {
+        EntityManager em = emf.createEntityManager();
+        if(em.find(User.class,"user") == null) {
+
+
+            User user = new User("user", "test");
+            User admin = new User("admin", "test");
+            User both = new User("user_admin", "test");
+
+            em.getTransaction().begin();
+            Role userRole = new Role("user");
+            Role adminRole = new Role("admin");
+            user.addRole(userRole);
+            admin.addRole(adminRole);
+            both.addRole(userRole);
+            both.addRole(adminRole);
+            em.persist(userRole);
+            em.persist(adminRole);
+            em.persist(user);
+            em.persist(admin);
+            em.persist(both);
+            em.getTransaction().commit();
+            List<User> userlist = new ArrayList<>();
+            userlist.add(user);
+            userlist.add(admin);
+            userlist.add(both);
+            return userlist;
+        }
+        else throw new Exception("Init already happend!");
     }
 }

@@ -15,10 +15,7 @@ import utils.EMF_Creator;
 import utils.Tokenizer;
 
 import javax.persistence.EntityManagerFactory;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.logging.Level;
@@ -31,12 +28,18 @@ public class RegisterEndpoint {
     public static final UserFacade USER_FACADE = UserFacade.getUserFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
+    @GET
+    @Path("init")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response init() throws Exception {
+        return Response.ok().entity(GSON.toJson(USER_FACADE.initDB())).build();
+    }
+
     @POST
     @Path("check")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response check(String jsonString) throws API_Exception {
-
         String username;
         Boolean exists;
         try {

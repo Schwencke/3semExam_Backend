@@ -95,20 +95,20 @@ public class LoginEndpoint {
 //
 //    }
 
-//    @POST
-//    @Path("verify")
-//    @Consumes(MediaType.TEXT_PLAIN)
-//    public Response verifyToken(String token) throws Exception {
-//        try {
-//            Algorithm algorithm = Algorithm.HMAC256(SharedSecret.getSharedKey());
-//            JWTVerifier verifier = JWT.require(algorithm)
-//                    .withIssuer("master_schwencke")
-//                    .build();
-//            DecodedJWT jwt = verifier.verify(token);
-//        } catch (JWTVerificationException exception){
-//            throw new AuthenticationException(exception.getMessage());
-//        }
-//        return Response.ok().build();
-//    }
+    @POST
+    @Path("verify")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response verifyToken(String token) throws Exception {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(SharedSecret.getSharedKey());
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .withIssuer("master_schwencke")
+                    .build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception){
+            throw new AuthenticationException(exception.getMessage());
+        }
+        return Response.ok().build();
+    }
 
 }
