@@ -53,4 +53,11 @@ public class RaceResource {
 
 
     }
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response editRace(String json)throws CustomException{
+        Race race = GSON.fromJson(json, Race.class);
+        return Response.ok().entity(GSON.toJson(FACADE.updateRace(race))).build();
+    }
 }

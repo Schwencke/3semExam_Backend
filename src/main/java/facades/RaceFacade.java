@@ -68,7 +68,7 @@ public class RaceFacade {
 
     public RaceDTO addCarToRace(int carId, int raceId) throws CustomException {
         if (carId <=0 || raceId <=0){
-            throw new CustomException(409, "You must provide an ID");
+            throw new CustomException(400, "You must provide an ID");
             }
         EntityManager em = getEntityManager();
         Race race = em.find(Race.class, raceId);
@@ -89,4 +89,36 @@ public class RaceFacade {
         }
         return new RaceDTO(race);
 }
+
+    public RaceDTO updateRace(Race r) throws CustomException {
+        EntityManager em = getEntityManager();
+        if (r.getId() <= 0){
+            throw new CustomException(400, "You must provide an id!");
+        }
+        Race race = em.find(Race.class, r.getId());
+        if (race == null){
+            throw new CustomException(404, "A race with the ID: " +r.getId()+". Does not exist");
+        }
+        List<Car> carList = new ArrayList<>();
+        r.getCars().forEach(car -> {
+            Car c = em.find(Car.class, car.getId());
+               if (c != null){
+                   carList.add(c);
+               }
+        });
+        race.setCars(carList);
+        race.setDate(r.getDate());
+        race.setLocation(r.getLocation());
+        race.setName(r.getName());
+        race.setTime(r.getTime());
+
+        try{
+            em.getTransaction().begin();
+            em.merge(race);
+            em.getTransaction().commit();
+        }finally {
+            em.close();
+        }
+        return new RaceDTO(race);
+    }
 }

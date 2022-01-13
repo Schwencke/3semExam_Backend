@@ -13,6 +13,7 @@ public class RaceDTO {
     String date;
     String time;
     String location;
+    CarsDTO cars;
 
     public RaceDTO(String name, String date, String time, String location) {
         this.name = name;
@@ -29,7 +30,10 @@ public class RaceDTO {
         this.date = race.getDate();
         this.time = race.getTime();
         this.location = race.getLocation();
+        this.cars = new CarsDTO(race.getCars());
+
     }
+
 
     public String getName() {
         return name;
