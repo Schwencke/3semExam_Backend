@@ -31,6 +31,13 @@ public class RaceResource {
       return Response.ok().entity(GSON.toJson(FACADE.getAllRaces())).build();
     }
 
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRaceById(@PathParam("id")Integer id) throws CustomException{
+        return Response.ok().entity(GSON.toJson(FACADE.getRaceById(id))).build();
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

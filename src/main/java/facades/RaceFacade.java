@@ -121,4 +121,12 @@ public class RaceFacade {
         }
         return new RaceDTO(race);
     }
+    public RaceDTO getRaceById(int id) throws CustomException {
+        EntityManager em = getEntityManager();
+        Race race = em.find(Race.class, id);
+        if (race == null){
+            throw new CustomException(404, "No race with the ID: "+id+" was found.");
+        }
+        return new RaceDTO(race);
+    }
 }
