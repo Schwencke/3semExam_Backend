@@ -21,6 +21,9 @@ public class ApplicationConfig extends Application {
         resources.add(security.JWTAuthenticationFilter.class);
 
         resources.add(rest.UserResource.class);
+        resources.add(rest.CarResource.class);
+        resources.add(rest.DriverResource.class);
+        resources.add(rest.RaceResource.class);
 
 
         resources.add(security.LoginEndpoint.class);

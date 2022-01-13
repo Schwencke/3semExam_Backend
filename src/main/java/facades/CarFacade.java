@@ -1,5 +1,6 @@
 package facades;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 public class CarFacade {
@@ -8,6 +9,10 @@ public class CarFacade {
     private static CarFacade instance;
 
     private CarFacade() {
+    }
+
+    private EntityManager getEntityManager() {
+        return emf.createEntityManager();
     }
 
     public static CarFacade getCarFacade(EntityManagerFactory _emf) {
