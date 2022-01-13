@@ -1,5 +1,6 @@
 package facades;
 
+import entities.Race;
 import entities.Role;
 import entities.User;
 import javax.persistence.EntityManager;
@@ -82,6 +83,7 @@ public class UserFacade {
             User user = new User("user", "test");
             User admin = new User("admin", "test");
             User both = new User("user_admin", "test");
+            Race race = new Race("Burgundia Race", "25-02-2022", "13:45","Racerbanevej 7, 3700 Rønne");
 
             em.getTransaction().begin();
             Role userRole = new Role("user");
@@ -90,6 +92,7 @@ public class UserFacade {
             admin.addRole(adminRole);
             both.addRole(userRole);
             both.addRole(adminRole);
+            em.persist(race);
             em.persist(userRole);
             em.persist(adminRole);
             em.persist(user);
