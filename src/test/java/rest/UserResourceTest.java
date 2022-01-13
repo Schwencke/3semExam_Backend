@@ -8,6 +8,7 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,6 +72,12 @@ class UserResourceTest {
         }finally {
             em.close();
         }
+    }
+
+    @AfterAll
+    public static void clean(){
+        EMF_Creator.endREST_TestWithDB();
+        httpServer.shutdownNow();
     }
 
     @AfterEach
