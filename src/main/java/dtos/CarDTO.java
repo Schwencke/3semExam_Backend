@@ -1,30 +1,31 @@
 package dtos;
 
+import entities.Car;
+import entities.Driver;
+
 import java.util.List;
 
 public class CarDTO {
-    String name;
+    int id;
     String make;
     String model;
     String year;
-    List<Integer> driverIds;
-    List<Integer> raceIds;
 
-    public CarDTO(String name, String make, String model, String year, List<Integer> driverIds, List<Integer> raceIds) {
-        this.name = name;
+
+    public CarDTO(String make, String model, String year) {
         this.make = make;
         this.model = model;
         this.year = year;
-        this.driverIds = driverIds;
-        this.raceIds = raceIds;
     }
 
-    public String getName() {
-        return name;
-    }
+    public CarDTO(Car car) {
+        if (car.getId() != null){
+            this.id = car.getId();
+        }
+        this.make = car.getMake();
+        this.model = car.getModel();
+        this.year = car.getYear();
 
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getMake() {
@@ -51,11 +52,4 @@ public class CarDTO {
         this.year = year;
     }
 
-    public List<Integer> getDriverIds() {
-        return driverIds;
-    }
-
-    public void setDriverIds(List<Integer> driverIds) {
-        this.driverIds = driverIds;
-    }
 }

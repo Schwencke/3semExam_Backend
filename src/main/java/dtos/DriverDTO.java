@@ -1,18 +1,30 @@
 package dtos;
 
+import entities.Driver;
+import entities.Race;
+
 import java.util.List;
 
 public class DriverDTO {
+    int id;
     String name;
     String birthYear;
     String gender;
-    List<Integer> carIds;
 
-    public DriverDTO(String name, String birthYear, String gender, List<Integer> carIds) {
+
+    public DriverDTO(String name, String birthYear, String gender) {
         this.name = name;
         this.birthYear = birthYear;
         this.gender = gender;
-        this.carIds = carIds;
+    }
+
+    public DriverDTO(Driver driver) {
+        if (driver.getId() != null){
+            this.id = driver.getId();
+        }
+        this.name = driver.getName();
+        this.birthYear = driver.getBirthYear();
+        this.gender = driver.getGender();
     }
 
     public String getName() {
@@ -39,11 +51,4 @@ public class DriverDTO {
         this.gender = gender;
     }
 
-    public List<Integer> getCarIds() {
-        return carIds;
-    }
-
-    public void setCarIds(List<Integer> carIds) {
-        this.carIds = carIds;
-    }
 }

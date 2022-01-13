@@ -1,7 +1,10 @@
 package facades;
 
 import dtos.CarDTO;
+import dtos.CarsDTO;
 import dtos.DriverDTO;
+import entities.Car;
+import entities.Race;
 import errorhandling.CustomException;
 
 import javax.persistence.EntityManager;
@@ -29,14 +32,25 @@ public class CarFacade {
         return instance;
     }
 
-    public List<CarDTO> getAllCars() throws CustomException {
+    public CarsDTO getAllCars() throws CustomException {
         EntityManager em = getEntityManager();
-        TypedQuery<CarDTO> query = em.createQuery("select c from Car c", CarDTO.class);
-        List<CarDTO> cars = query.getResultList();
+        TypedQuery<Car> query = em.createQuery("select c from Car c", Car.class);
+        List<Car> cars = query.getResultList();
         if (cars.isEmpty()){
-            throw new CustomException(404, "No cars was found.");
+            throw new CustomException(404, "No cars was found");
         }
-        return cars;
+        return new CarsDTO(cars);
     }
+
+    public CarsDTO getCarsByRace(int raceId) throws CustomException {
+        EntityManager em = getEntityManager();
+        Race race = em.find(Race.class, raceId);
+        if (race == null){
+            throw new CustomException(404, "A race with the ID: " + raceId + " does not exist");
+        }
+
+        return new CarsDTO(race.getCars());
+    }
+
 
 }
