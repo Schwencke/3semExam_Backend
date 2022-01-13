@@ -31,6 +31,13 @@ public class CarResource {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    public Response getCarById(@PathParam("id")Integer id) throws CustomException {
+        return Response.ok().entity(GSON.toJson(FACADE.getCarById(id))).build();
+    }
+
+    @GET
+    @Path("/race/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getCarsByRace(@PathParam("id") Integer id) throws CustomException {
         return Response.ok().entity(GSON.toJson(FACADE.getCarsByRace(id))).build();
     }

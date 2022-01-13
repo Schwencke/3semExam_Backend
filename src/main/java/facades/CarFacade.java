@@ -53,4 +53,12 @@ public class CarFacade {
     }
 
 
+    public CarDTO getCarById(int id) throws CustomException {
+        EntityManager em = getEntityManager();
+        Car car = em.find(Car.class, id);
+        if (car == null){
+            throw new CustomException(404, "A car with the ID: " + id + " does not exist");
+        }
+        return new CarDTO(car);
+    }
 }
