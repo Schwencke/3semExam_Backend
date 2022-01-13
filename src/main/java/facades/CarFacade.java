@@ -1,5 +1,6 @@
 package facades;
 
+import com.google.gson.JsonElement;
 import dtos.CarDTO;
 import dtos.CarsDTO;
 import dtos.DriverDTO;
@@ -60,5 +61,21 @@ public class CarFacade {
             throw new CustomException(404, "A car with the ID: " + id + " does not exist");
         }
         return new CarDTO(car);
+    }
+
+    public String deleteCar(Integer id) throws CustomException {
+        EntityManager em = getEntityManager();
+        Car car = em.find(Car.class, id);
+        if (car == null){
+            throw new CustomException(404, "A car with the ID: " + id + " does not exist");
+        }
+        try{
+            em.getTransaction().begin();
+            em.remove(car);
+            em.getTransaction().commit();
+        }finally {
+            em.close();
+        }
+        return "The car with ID: "+id+". Was successfully deleted from the system";
     }
 }

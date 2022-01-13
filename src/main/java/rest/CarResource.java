@@ -8,10 +8,7 @@ import facades.CarFacade;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManagerFactory;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -40,5 +37,13 @@ public class CarResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCarsByRace(@PathParam("id") Integer id) throws CustomException {
         return Response.ok().entity(GSON.toJson(FACADE.getCarsByRace(id))).build();
+    }
+
+    @DELETE
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteCar(@PathParam("id")Integer id) throws CustomException{
+        return Response.ok().entity(GSON.toJson(FACADE.deleteCar(id))).build();
     }
 }
