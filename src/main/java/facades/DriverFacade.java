@@ -2,6 +2,7 @@ package facades;
 
 import dtos.CarDTO;
 import dtos.CarsDTO;
+import dtos.DriverDTO;
 import dtos.DriversDTO;
 import entities.Car;
 import entities.Driver;
@@ -11,7 +12,10 @@ import errorhandling.CustomException;
 import javax.enterprise.inject.Typed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.io.DataInput;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DriverFacade {
@@ -44,4 +48,35 @@ public class DriverFacade {
         return new DriversDTO(drivers);
     }
 
+    public DriverDTO getDriverById(Integer id) throws CustomException {
+        EntityManager em = getEntityManager();
+        Driver driver = em.find(Driver.class, id);
+        if (driver == null){
+            throw new CustomException(404, "No driver with the ID: "+id+" was found.");
+        }
+        return new DriverDTO(driver);
+    }
+
+    public DriversDTO getDriversByRace(Integer id) throws CustomException {
+        EntityManager em = getEntityManager();
+        Race race;
+        List<Driver> drivers = new ArrayList<>();
+        TypedQuery<Race> query = em.createQuery("select r from Race r where r.id=:id", Race.class);
+        try{
+            query.setParameter("id", id);
+            race = query.getSingleResult();
+        }catch (NoResultException e){
+            throw new CustomException(404, "No race with ID: "+id+" was found.");
+        }
+
+        race.getCars().forEach(car -> {
+            if (car.getDriver() != null){
+            drivers.add(car.getDriver());
+            }
+        });
+        if (drivers.isEmpty()){
+            throw new CustomException(404, "There are currently no drivers in race no: "+id);
+        }
+        return new DriversDTO(drivers);
+    }
 }
