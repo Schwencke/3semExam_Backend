@@ -4,7 +4,9 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "race")
 @Entity
@@ -28,12 +30,24 @@ public class Race {
     @Column(name = "location", nullable = false)
     private String location;
 
+    @ManyToMany
+    private List<Car> cars;
+
     public Race() {
     }
 
-    public Race(String name, String date, String time, String location) throws ParseException {
+    public Race(String name, String date, String time, String location, Car car) {
+        this.name = name;
+        this.date = date;
+        this.time = time;
+        this.location = location;
 
+        List<Car> carList = new ArrayList<>();
+        carList.add(car);
+        this.cars = carList;
+    }
 
+    public Race(String name, String date, String time, String location) {
         this.name = name;
         this.date = date;
         this.time = time;
@@ -79,4 +93,23 @@ public class Race {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
+    public void addCar(Car car) {
+        if (this.cars == null){
+            List<Car> carList = new ArrayList<>();
+            carList.add(car);
+            this.cars = carList;
+        } else {
+            this.cars.add(car);
+        }
+    }
+
 }

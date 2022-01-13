@@ -1,8 +1,7 @@
 package facades;
 
-import entities.Race;
-import entities.Role;
-import entities.User;
+import entities.*;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -79,11 +78,19 @@ public class UserFacade {
         EntityManager em = emf.createEntityManager();
         if(em.find(User.class,"user") == null) {
 
+            Driver driver = new Driver("Thomas", "1989", "hen");
+            Race race = new Race("Burgundia Race", "25-02-2022", "13:45","Racerbanevej 7, 3700 Rønne");
+
+            Car car1 = new Car("Honda","Cevic", "2020",driver, race);
+            Car car2 = new Car("Toyota", "Skyline", "1995", driver, race);
+            driver.addCar(car2);
+            race.addCar(car2);
+
 
             User user = new User("user", "test");
             User admin = new User("admin", "test");
             User both = new User("user_admin", "test");
-            Race race = new Race("Burgundia Race", "25-02-2022", "13:45","Racerbanevej 7, 3700 Rønne");
+
 
             em.getTransaction().begin();
             Role userRole = new Role("user");
@@ -92,6 +99,9 @@ public class UserFacade {
             admin.addRole(adminRole);
             both.addRole(userRole);
             both.addRole(adminRole);
+            em.persist(car1);
+            em.persist(car2);
+            em.persist(driver);
             em.persist(race);
             em.persist(userRole);
             em.persist(adminRole);

@@ -1,6 +1,7 @@
 package facades;
 
 import dtos.RaceDTO;
+import dtos.RacesDTO;
 import entities.Race;
 import errorhandling.CustomException;
 
@@ -29,14 +30,14 @@ public class RaceFacade {
         return instance;
     }
 
-    public List<RaceDTO> getAllRaces() throws CustomException {
+    public RacesDTO getAllRaces() throws CustomException {
         EntityManager em = getEntityManager();
-        TypedQuery<RaceDTO> query = em.createQuery("select r from Race r", RaceDTO.class);
-        List<RaceDTO> races = query.getResultList();
+        TypedQuery<Race> query = em.createQuery("select r from Race r", Race.class);
+        List<Race> races = query.getResultList();
         if (races.isEmpty()){
             throw new CustomException(404, "No races was found.");
         }
-        return races;
+        return new RacesDTO(races);
     }
 
 }
