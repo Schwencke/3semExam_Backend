@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.nimbusds.jose.JOSEException;
+import errorhandling.CustomExceptionMapper;
 import facades.UserFacade;
 
 import java.util.Date;
@@ -24,7 +25,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import security.errorhandling.AuthenticationException;
-import errorhandling.GenericExceptionMapper;
 import javax.persistence.EntityManagerFactory;
 import utils.EMF_Creator;
 import utils.Tokenizer;
@@ -62,7 +62,7 @@ public class LoginEndpoint {
             if (ex instanceof AuthenticationException) {
                 throw (AuthenticationException) ex;
             }
-            Logger.getLogger(GenericExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
         }
         throw new AuthenticationException("Invalid username or password! Please try again");
     }

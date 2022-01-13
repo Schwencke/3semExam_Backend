@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 
 @Path("race")
 public class RaceResource {
-
+    //TODO: remember to add user-role restriction
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final RaceFacade FACADE = RaceFacade.getRaceFacade(EMF);

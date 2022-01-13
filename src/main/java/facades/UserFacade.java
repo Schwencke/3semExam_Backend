@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
-import errorhandling.GenericExceptionMapper;
+import errorhandling.CustomExceptionMapper;
 import security.errorhandling.AuthenticationException;
 
 import java.util.ArrayList;

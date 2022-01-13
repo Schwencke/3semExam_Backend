@@ -7,8 +7,8 @@ import com.google.gson.JsonParser;
 import com.nimbusds.jose.JOSEException;
 import entities.User;
 import errorhandling.API_Exception;
+import errorhandling.CustomExceptionMapper;
 import errorhandling.ExceptionDTO;
-import errorhandling.GenericExceptionMapper;
 import facades.UserFacade;
 import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
@@ -83,7 +83,7 @@ public class RegisterEndpoint {
             if (ex instanceof AuthenticationException) {
                 throw (AuthenticationException) ex;
             }
-            Logger.getLogger(GenericExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
         }
         throw new AuthenticationException("User already exists!");
     }
