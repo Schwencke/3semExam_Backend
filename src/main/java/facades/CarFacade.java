@@ -78,4 +78,13 @@ public class CarFacade {
         }
         return "The car with ID: "+id+". Was successfully deleted from the system";
     }
+
+    public CarDTO createNewCar(Car car) {
+        EntityManager em = getEntityManager();
+       em.getTransaction().begin();
+       em.persist(car);
+       em.getTransaction().commit();
+
+       return new CarDTO(car);
+    }
 }

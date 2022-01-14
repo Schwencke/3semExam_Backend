@@ -3,6 +3,8 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.CarDTO;
+import entities.Car;
 import errorhandling.CustomException;
 import facades.CarFacade;
 import utils.EMF_Creator;
@@ -23,6 +25,15 @@ public class CarResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllCars() throws CustomException {
         return Response.ok().entity(GSON.toJson(FACADE.getAllCars())).build();
+    }
+
+    @POST
+    @Path("new")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response newCar(String json) throws CustomException {
+        Car car = GSON.fromJson(json, Car.class);
+        return Response.ok().entity(GSON.toJson(FACADE.createNewCar(car))).build();
     }
 
     @GET
