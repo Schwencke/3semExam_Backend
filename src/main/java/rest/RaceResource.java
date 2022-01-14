@@ -42,7 +42,7 @@ public class RaceResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createNewRace(String json) throws CustomException {
-        Race race = GSON.fromJson(json, Race.class);
+        RaceDTO race = GSON.fromJson(json, RaceDTO.class);
         return Response.ok().entity(GSON.toJson(FACADE.createNewRace(race))).build();
 
     }

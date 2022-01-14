@@ -41,7 +41,7 @@ public class RaceFacade {
     }
 
 
-    public RaceDTO createNewRace(Race r) throws CustomException {
+    public RaceDTO createNewRace(RaceDTO r) throws CustomException {
         EntityManager em = getEntityManager();
         Race race = new Race();
         try {
@@ -52,7 +52,10 @@ public class RaceFacade {
                 throw new CustomException(409, "The race you are trying to create with name: "+race.getName() + ". Already exist!");
             }
         }catch (NoResultException e){
-            race = r;
+            race.setName(r.getName());
+            race.setTime(r.getTime());
+            race.setLocation(r.getLocation());
+            race.setDate(r.getDate());
             try {
                 em.getTransaction().begin();
                 em.persist(race);
